@@ -1,0 +1,3 @@
+SupraIR		KEYWORD1
+sendIR		KEYWORD1
+getIR		KEYWORD1
