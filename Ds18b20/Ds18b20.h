@@ -13,7 +13,7 @@ class Ds18b20 {
 		~Ds18b20();
 		float getTemperature(); // read temperature in Celsius
 	protected:
-			void _read();
+		void _read();
 	private:
 		OneWire * ds;
 		float _temp;
