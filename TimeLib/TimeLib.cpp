@@ -31,7 +31,7 @@ char * TimeLib::tmDate( struct tm *tim_p )
 {
 	static const char *day_name[] = {"Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"};
 	static const char *mon_name[] = {"Января","Февраля","Марта","Апреля","Мая","Июня","Июля","Августа","Сентября","Октября","Ноября","Декабря"};
-	os_sprintf( dateBuff, "%s %02d %s %d", day_name[tim_p->tm_wday], tim_p->tm_mday, mon_name[tim_p->tm_mon], 1900 + tim_p->tm_year );
+	os_sprintf( dateBuff, "%s %d %s %d", day_name[tim_p->tm_wday], tim_p->tm_mday, mon_name[tim_p->tm_mon], 1900 + tim_p->tm_year );
 	return dateBuff;
 }
 
