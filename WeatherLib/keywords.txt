@@ -1,0 +1,4 @@
+WeatherLib			KEYWORD1
+weatherSt			KEYWORD2
+getWeather			KEYWORD2
+getWeatherString	KEYWORD2
