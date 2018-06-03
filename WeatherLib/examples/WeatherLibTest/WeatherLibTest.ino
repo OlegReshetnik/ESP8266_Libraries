@@ -1,6 +1,6 @@
 #include <WeatherLib.h>
 
-WeatherLib wl("Krasnodar");
+WeatherLib wl("Krasnodar"); // "moscow,RU" если в разных странах есть одинаковые названия
 
 void setup() {
 	Serial.begin( 115200 );
