@@ -6,15 +6,8 @@
 
 WeatherLib wl("Krasnodar"); // "moscow,RU" если в разных странах есть одинаковые названия
 
-void setup() {
-	Serial.begin( 115200 );
-}
+Serial.println( wl.getWeatherString() );
 
-void loop() {
-	Serial.println( wl.getWeatherString() );
-
-	delay(5000);
-}
 
 Также можно использовать функцию getWeather()
 
