@@ -6,16 +6,16 @@
 
 #define WEATHER_UPDATE_INTERVAL	(20*60*1000) // 20 minutes
 
-#define W_W	0 // западный
+#define W_W		0 // западный
 #define W_WS	1 // юг-западный
-#define W_S	2 // южный
+#define W_S		2 // южный
 #define W_SO	3 // юго-восточный
-#define W_O	4 // восточный
+#define W_O		4 // восточный
 #define W_NO	5 // северо-восточный
-#define W_N	6 // северный
+#define W_N		6 // северный
 #define W_NW	7 // северо-западный
 
-#define DESK_LEN		31
+#define DESK_LEN			31
 #define WEATHER_READ_BUFF	300
 #define MAX_WEATHER_STRING	64
 
