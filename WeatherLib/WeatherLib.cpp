@@ -1,8 +1,9 @@
 #include "WeatherLib.h"
 
-WeatherLib::WeatherLib( const char * city ) {
-	_pClient = new WiFiClient;
+WeatherLib::WeatherLib( const char * city, const char * apiKey ) {
 	_pCity = (char *)city;
+	_pApiKey = (char *)apiKey;
+	_pClient = new WiFiClient;
 	_pWeatherString = (char *)malloc(MAX_WEATHER_STRING);
 	_pWeather = new weatherSt;
 	_oldRead = millis() - ( WEATHER_UPDATE_INTERVAL * 2 );
@@ -18,8 +19,7 @@ WeatherLib::~WeatherLib() {
 void WeatherLib::_updateWeather() {
 	if( ( millis() - _oldRead ) > WEATHER_UPDATE_INTERVAL ) {
 		char * buff = (char *)malloc(WEATHER_READ_BUFF);
-		_getJson( _pClient, buff, _pCity );
-		if( buff[0] != 0 ) {
+		if( _getJson( _pClient, buff, _pCity, _pApiKey ) ) {
 			_parseJson( buff, _pWeather );
 			_oldRead = millis();
 		}
@@ -51,19 +51,22 @@ void WeatherLib::_printWeather( char * str, weatherSt * _wz ) {
 	
 }
 
-void WeatherLib::_getJson( WiFiClient * pClnt, char * buff, char * city ) {
+bool WeatherLib::_getJson( WiFiClient * pClnt, char * buff, char * city, char * apiKey ) {
 	const char * weatherHost = "api.openweathermap.org";
-	buff[0] = 0;
 	if( pClnt->connect( weatherHost, 80) ) {
 		sprintf( buff,
-		"GET /data/2.5/weather?q=%s&units=metric&appid=1d230c9a48414be04746d6d5b08a3919&lang=ru\r\nHost: %s\r\nUser-Agent: ArduinoWiFi/1.1\r\nConnection: close\r\n\r\n",
-		city, weatherHost );
+		"GET /data/2.5/weather?q=%s&units=metric&appid=%s&lang=ru\r\nHost: %s\r\nUser-Agent: ArduinoWiFi/1.1\r\nConnection: close\r\n\r\n",
+		city, apiKey, weatherHost );
 		pClnt->print( buff );
 		uint8_t cnt = 0;
 		while( !pClnt->available() && cnt++ < 10 ) delay(500);
 		int nn = pClnt->read( (uint8_t *)buff, WEATHER_READ_BUFF );
-		if( nn > 0 ) buff[nn] = 0;
+		if( nn > 0 ) {
+			buff[nn] = 0;
+			return true;
+		}
 	}
+	return false;
 }
 
 void WeatherLib::_parseJson( char * buff, weatherSt * _wz ) {
