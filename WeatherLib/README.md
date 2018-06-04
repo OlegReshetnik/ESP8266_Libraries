@@ -4,10 +4,12 @@
 
 #include <WeatherLib.h>
 
-WeatherLib wl("Krasnodar"); // "moscow,RU" если в разных странах есть одинаковые названия
+WeatherLib wl("City","api_key"); // "City,RU" если в разных странах есть одинаковые названия
+
+// Получить API key здесь: https://openweathermap.org/appid
+
 
 Serial.println( wl.getWeatherString() );
-
 
 Также можно использовать функцию getWeather()
 
