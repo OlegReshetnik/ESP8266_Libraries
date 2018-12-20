@@ -1,0 +1,4 @@
+SimpleTouch		KEYWORD1
+getTouch		KEYWORD2
+calibrateTouch	KEYWORD2
+isTouch			KEYWORD2
