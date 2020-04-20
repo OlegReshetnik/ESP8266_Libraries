@@ -32,7 +32,7 @@ void loop()
 	  int	tm_yday;
 	  int	tm_isdst; };
 	*/
-	struct tm c_time = tl.cTime();
+	struct tm * c_time = tl.cTime();
 	Serial.printf( "Время с точками: %02d.%02d.%02d\n", c_time->tm_hour, c_time->tm_min, c_time->tm_sec );
 	
 	Serial.print( tl.tmDate() );
