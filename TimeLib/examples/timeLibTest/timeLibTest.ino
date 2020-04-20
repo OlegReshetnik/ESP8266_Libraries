@@ -20,7 +20,7 @@ void setup()
 
 void loop()
 {
-	/* Получить данные:
+	/* Какие поля есть у структуры:
 	struct tm {
 	  int	tm_sec;
 	  int	tm_min;
