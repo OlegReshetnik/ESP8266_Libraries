@@ -1,52 +1,35 @@
+#include <time.h>
 #include  "TimeLib.h"
 
-extern "C" {
-	struct tm* sntp_localtime(const time_t *clock);
+struct tm * TimeLib::cTime() {
+	time_t ts = time(nullptr);
+	localtime_r(&ts, &__tt);
+	return &__tt;
 }
 
+static const char *__day_name[] = {"Вс","Пн","Вт","Ср","Чт","Пт","Сб"};
 
-TimeLib::TimeLib( uint8_t timezone )
-{
-	sntp_stop();
-	sntp_setservername( 0, "pool.ntp.org" );
-	sntp_setservername( 1, "time.nist.gov" );
-	sntp_setservername( 2, "time1.google.com" );
-	sntp_set_timezone( timezone );
-	sntp_init();
-}
-
-uint32_t TimeLib::uinixTime()
-{
-	return (uint32_t)sntp_get_current_timestamp();
-}
-
-struct tm * TimeLib::cTime()
-{
-	uint32_t clk = sntp_get_current_timestamp();
-	__tt = sntp_localtime( (const time_t *)&clk );
-	return __tt;
-}
-
-char * TimeLib::tmDate( struct tm *tim_p )
-{
-	static const char *day_name[] = {"Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"};
-	static const char *mon_name[] = {"Января","Февраля","Марта","Апреля","Мая","Июня","Июля","Августа","Сентября","Октября","Ноября","Декабря"};
-	os_sprintf( dateBuff, "%s %d %s %d", day_name[tim_p->tm_wday], tim_p->tm_mday, mon_name[tim_p->tm_mon], 1900 + tim_p->tm_year );
+char * TimeLib::tmDate() {
+	struct tm *tim_p = cTime();
+	static const char *mon_name[] = {"Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"};
+	os_sprintf(dateBuff, "%s %d %s %d", __day_name[tim_p->tm_wday], tim_p->tm_mday, mon_name[tim_p->tm_mon], 1900 + tim_p->tm_year );
 	return dateBuff;
 }
 
-char * TimeLib::tmDate()
-{
-	return tmDate( cTime() );
+char * TimeLib::tmShortDate() {
+	struct tm *tim_p = cTime();
+	os_sprintf(dateBuff, "%02d.%02d %s", tim_p->tm_mday, 1+tim_p->tm_mon, __day_name[tim_p->tm_wday]);
+	return dateBuff;
 }
 
-char * TimeLib::tmTime( struct tm *tim_p )
-{
-	os_sprintf( timeBuff, "%02d:%02d:%02d", tim_p->tm_hour, tim_p->tm_min, tim_p->tm_sec );
+char * TimeLib::tmTime() {
+	struct tm *tim_p = cTime();
+	os_sprintf(timeBuff, "%02d:%02d:%02d", tim_p->tm_hour, tim_p->tm_min, tim_p->tm_sec);
 	return timeBuff;
 }
 
-char * TimeLib::tmTime()
-{
-	return tmTime( cTime() );
+char * TimeLib::tmShortTime() {
+	struct tm *tim_p = cTime();
+	os_sprintf(timeBuff, "%02d:%02d", tim_p->tm_hour, tim_p->tm_min);
+	return timeBuff;
 }
