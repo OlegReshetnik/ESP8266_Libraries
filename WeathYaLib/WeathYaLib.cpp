@@ -69,6 +69,7 @@ void WeathYaLib::_parseIcon(char *icon, char *out) {
 }
 
 // https://yandex.com/time/sync.json?geo=35
+// https://yandex.com/time/sync.json?geo=35
 // {"time":1648119977119,"clocks":{"35":{"id":35,"name":"Краснодар","offset":10800000,"offsetString":"UTC+3:00",
 // "showSunriseSunset":true,"sunrise":"06:20","sunset":"18:40","isNight":false,"skyColor":"#63befa",
 // "weather":{"temp":7,"icon":"bkn-d","link":"https://yandex.ru/pogoda/35?lat=45.03547&lon=38.975313"},
